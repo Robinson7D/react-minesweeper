@@ -37,11 +37,16 @@
     justify-content: space-between;
     align-items: baseline;
 
-    input {
+    input, select {
       border: 1px solid $color--border;
       border-radius: 4px;
       padding: 2px 5px;
       font-size: 14px;
+      background-color: #FFFFFF;
+    }
+
+    &:not(:first-child) {
+      margin-top: 15px;
     }
   }
 

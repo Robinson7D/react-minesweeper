@@ -14,7 +14,7 @@ import './Game.css';
 class Game extends Component {
   constructor(props){
     super(props);
-    this.state = this._getNewGameState(10);
+    this.state = this._getNewGameState();
   }
 
   onCellClick(cell){
@@ -26,14 +26,14 @@ class Game extends Component {
     });
   }
 
-  onRestartClick(size) {
-    this.setState(this._getNewGameState(size));
+  onRestartClick(options) {
+    this.setState(this._getNewGameState(options));
   }
 
-  _getNewGameState(size=10){
+  _getNewGameState(options={}){
     return {
-      size: size,
-      cellRows: buildBoardCells(size),
+      options: options,
+      cellRows: buildBoardCells(options),
       gameCondition: "new",
     };
   }
@@ -45,7 +45,7 @@ class Game extends Component {
   render() {
     return (
       <div className={this.getGameClassName()}>
-        <GameControls onRestartClick={(size)=> this.onRestartClick(size)}>
+        <GameControls onRestartClick={(options)=> this.onRestartClick(options)}>
         </GameControls>
         <section class="CurrentGame">
           <ConditionMessage gameCondition={this.state.gameCondition}>
@@ -61,11 +61,12 @@ class Game extends Component {
 
 export default Game;
 
-function buildBoardCells(size=10){
+function buildBoardCells({size=10, difficulty=0}){
   let i,
       j,
       cells = [], // Nested array for rows, columns
-      currentRow;
+      currentRow,
+      bombRandomThreshold = (difficulty * 0.05) + 0.075;
 
   for(i = 0; i < size; i++) {
     currentRow = {
@@ -77,7 +78,7 @@ function buildBoardCells(size=10){
       currentRow.cells.push({
         id: 'row_'+i+'_cell_'+j,
         visible: false,
-        isBomb: Math.random() < 0.1, // TODO: place bombs after first click
+        isBomb: Math.random() < bombRandomThreshold, // TODO: place bombs after first click
         adjacentBombs: null, // Will calculate lazily
         row: i,
         column: j,

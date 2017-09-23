@@ -16,7 +16,10 @@ class GameControls extends Component {
 
   onResetClick() {
     if(!this.state.sizeError){
-      this.props.onRestartClick(this.state.size);
+      this.props.onRestartClick({
+        size: this.state.size,
+        difficulty: this.state.difficulty,
+      });
     }
   }
 
@@ -29,10 +32,27 @@ class GameControls extends Component {
     });
   }
 
+  onDifficultyChange(event){
+    let difficulty = event.target.value;
+
+    this.setState({
+      difficulty: +difficulty,
+      difficultyError: difficulty < 0 || difficulty > 4,
+    });
+  }
+
   _getSizeInputLabelClass(){
     let className = "Control BoardSizeControl";
 
     if(this.state.sizeError){ className += " error"; }
+
+    return className;
+  }
+
+  _getDifficultyInputLabelClass(){
+    let className = "Control DifficultyControl";
+
+    if(this.state.difficultyError){ className += " error"; }
 
     return className;
   }
@@ -50,6 +70,21 @@ class GameControls extends Component {
           </label>
           <div className="ErrorMessage">
             Size must be at least {MIN_SIZE}
+          </div>
+
+          <label className={this._getDifficultyInputLabelClass()}>
+            <span> Difficulty: </span>
+            <select value={this.state.difficulty}
+                    onChange={(event)=> this.onDifficultyChange(event)}>
+              <option value="0"> Super Easy </option>
+              <option value="1"> Easy </option>
+              <option value="2"> Medium </option>
+              <option value="3"> Hard </option>
+              <option value="4"> Very Hard </option>
+            </select>
+          </label>
+          <div className="ErrorMessage">
+            Invalid difficulty selection
           </div>
         </div>
 

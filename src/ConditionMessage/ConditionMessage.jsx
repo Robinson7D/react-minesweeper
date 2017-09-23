@@ -16,7 +16,7 @@ function getConditionMessagesMap(){
   return new Map([
     ['new', 'Click a cell to begin!'],
     ['active', 'Game in progress'],
-    ['lose', 'YOU LOSE!'],
-    ['win', 'YOU WIN!!!'],
+    ['lose', '💣 YOU LOSE! 💣'],
+    ['win', '😸 YOU WIN! 🎉'],
   ]);
 }
