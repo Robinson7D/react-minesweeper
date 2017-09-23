@@ -1,10 +1,14 @@
+// Utils:
 import React, { Component } from 'react';
-import MinesweeperCell from '../MinesweeperCell/MinesweeperCell.jsx';
 import openBoardCell from './open-board-cell-util.jsx';
 import getGameCondition from './get-game-condition-util.jsx';
 
+// Components:
+import GameBoard from '../GameBoard/GameBoard.jsx';
+import ConditionMessage from '../ConditionMessage/ConditionMessage.jsx';
+
+// Styles:
 import './Game.css';
-const CONDITION_MESSAGES_MAP = getConditionMessagesMap();
 
 class Game extends Component {
   constructor(props){
@@ -28,44 +32,20 @@ class Game extends Component {
     return "Game " + this.state.gameCondition;
   }
 
-  getConditionMessage(){
-    return CONDITION_MESSAGES_MAP.get(this.state.gameCondition);
-  }
-
   render() {
     return (
       <div className={this.getGameClassName()}>
-        <div className="GameBoard">
-          {this.state.cellRows.map(row =>
-            <div className="BoardRow" key={row.id}>
-              {row.cells.map(cell =>
-                <MinesweeperCell key={cell.id}
-                                 onClick={() => this.onCellClick(cell)}
-                                 {...cell}>
-                </MinesweeperCell>
-              )}
-            </div>
-          )}
-        </div>
-
-        <h3 className="ConditionMessage">
-          {this.getConditionMessage()}
-        </h3>
+        <GameBoard onCellClick={(cell)=> this.onCellClick(cell)}
+                   cellRows={this.state.cellRows}>
+        </GameBoard>
+        <ConditionMessage gameCondition={this.state.gameCondition}>
+        </ConditionMessage>
       </div>
     );
   }
 }
 
 export default Game;
-
-function getConditionMessagesMap(){
-  return new Map([
-    ['new', 'Click a cell to begin!'],
-    ['active', 'Game in progress'],
-    ['lose', 'YOU LOSE!'],
-    ['win', 'YOU WIN!!!'],
-  ]);
-}
 
 function buildBoardCells(size=10){
   let i,

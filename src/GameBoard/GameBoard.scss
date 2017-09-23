@@ -1,0 +1,11 @@
+@import '../colors.scss';
+
+.GameBoard {
+  display: inline-flex;
+  flex-direction: column;
+  border: 1px solid $color--border;
+
+  .BoardRow {
+    display: flex;
+  }
+}
