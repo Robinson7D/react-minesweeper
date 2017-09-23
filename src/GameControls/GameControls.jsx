@@ -37,7 +37,7 @@ class GameControls extends Component {
 
     this.setState({
       difficulty: +difficulty,
-      difficultyError: difficulty < 0 || difficulty > 4,
+      difficultyError: difficulty < -1 || difficulty > 4,
     });
   }
 
@@ -81,6 +81,7 @@ class GameControls extends Component {
               <option value="2"> Medium </option>
               <option value="3"> Hard </option>
               <option value="4"> Very Hard </option>
+              <option value="-1"> So Hard It's Easy </option>
             </select>
           </label>
           <div className="ErrorMessage">

@@ -70,6 +70,8 @@ function buildBoardCells({size=10, difficulty=0}){
       currentRow,
       bombRandomThreshold = (difficulty * 0.05) + 0.075;
 
+  if(difficulty === -1){ bombRandomThreshold = 1; }
+
   for(i = 0; i < size; i++) {
     currentRow = {
       id: 'row_'+i,
