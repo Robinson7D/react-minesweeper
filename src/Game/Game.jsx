@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MinesweeperCell from '../MinesweeperCell/MinesweeperCell.jsx';
+import openBoardCell from './open-board-cell-util.jsx';
 import './Game.css';
 
 
@@ -12,7 +13,9 @@ class Game extends Component {
   }
 
   onCellClick(cell){
-    alert("CLICKED!" + JSON.stringify(cell));
+    this.setState({
+      cellRows: openBoardCell(cell, this.state.cellRows),
+    });
   }
 
   render() {
@@ -36,7 +39,6 @@ class Game extends Component {
 }
 
 export default Game;
-
 
 function buildBoardCells(size=10){
   let i,
