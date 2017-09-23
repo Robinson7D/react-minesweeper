@@ -1,0 +1,7 @@
+.BoardRow {
+  display: flex;
+}
+
+.MinesweeperCell:not(.visible) .cell-value {
+  display: none;
+}

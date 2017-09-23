@@ -1,0 +1,9 @@
+.MinesweeperCell {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #888888; /* I know, I know, doubles on the inside. */
+}
+
+.MinesweeperCell:not(.visible) .CellValue {
+  display: none;
+}

@@ -1,0 +1,13 @@
+.App-header {
+  background-color: #0A2342;
+  padding: 10px 20px;
+  color: #FFFDF7;
+}
+
+.App-header h2 {
+  margin: auto;
+}
+
+.App .Game {
+  margin: 20px;
+}
