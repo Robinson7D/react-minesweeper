@@ -1,1 +1,9 @@
 @import '../colors.scss';
+
+.Game {
+  display: flex;
+
+  .GameControls {
+    margin-right: 60px;
+  }
+}

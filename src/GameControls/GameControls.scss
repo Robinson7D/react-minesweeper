@@ -1,0 +1,79 @@
+@import '../colors.scss';
+
+.GameControls {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+
+  > *:not(:last-child) {
+    margin-bottom: 15px;
+  }
+
+  .RestartButton {
+    width: 100%;
+    padding: 5px 10px;
+    border: 1px solid $color--border;
+    border-radius: 5px;
+
+    font-size: 18px;
+    line-height: 1.2;
+    vertical-align: middle;
+    outline: 0; // Remove the glow
+    background-color: $color--brand-text-pair-light;
+    color: $color--brand-text-pair-dark;
+    cursor: pointer;
+
+    &:hover {
+      background-color: lighten($color--brand-text-pair-light, 20%);
+    }
+    &:active {
+      background-color: darken($color--brand-text-pair-light, 5%);
+    }
+  }
+
+
+  .Control {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    input {
+      border: 1px solid $color--border;
+      border-radius: 4px;
+      padding: 2px 5px;
+      font-size: 14px;
+    }
+  }
+
+  .ControlsContainer {
+    .ErrorMessage {
+      display: none;
+      margin-top: 5px;
+    }
+
+    .error + .ErrorMessage {
+      display: block;
+      color: $color--lose;
+    }
+  }
+}
+
+
+.BoardSizeControl {
+  display: inline-block;
+
+  > *:not(:last-child) {
+    margin-bottom: 5px;
+  }
+
+  > input {
+    text-align: right;
+    width: 100px;
+  }
+
+  &.error {
+    input {
+      border-color: $color--lose;
+    }
+  }
+}

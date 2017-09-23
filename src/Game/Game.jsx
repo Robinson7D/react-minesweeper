@@ -6,6 +6,7 @@ import getGameCondition from './get-game-condition-util.jsx';
 // Components:
 import GameBoard from '../GameBoard/GameBoard.jsx';
 import ConditionMessage from '../ConditionMessage/ConditionMessage.jsx';
+import GameControls from '../GameControls/GameControls.jsx';
 
 // Styles:
 import './Game.css';
@@ -13,10 +14,7 @@ import './Game.css';
 class Game extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      cellRows: buildBoardCells(this.props.size),
-      gameCondition: "new",
-    };
+    this.state = this._getNewGameState(10);
   }
 
   onCellClick(cell){
@@ -28,6 +26,18 @@ class Game extends Component {
     });
   }
 
+  onRestartClick(size) {
+    this.setState(this._getNewGameState(size));
+  }
+
+  _getNewGameState(size=10){
+    return {
+      size: size,
+      cellRows: buildBoardCells(size),
+      gameCondition: "new",
+    };
+  }
+
   getGameClassName(){
     return "Game " + this.state.gameCondition;
   }
@@ -35,11 +45,15 @@ class Game extends Component {
   render() {
     return (
       <div className={this.getGameClassName()}>
-        <GameBoard onCellClick={(cell)=> this.onCellClick(cell)}
-                   cellRows={this.state.cellRows}>
-        </GameBoard>
-        <ConditionMessage gameCondition={this.state.gameCondition}>
-        </ConditionMessage>
+        <GameControls onRestartClick={(size)=> this.onRestartClick(size)}>
+        </GameControls>
+        <section class="CurrentGame">
+          <ConditionMessage gameCondition={this.state.gameCondition}>
+          </ConditionMessage>
+          <GameBoard onCellClick={(cell)=> this.onCellClick(cell)}
+                     cellRows={this.state.cellRows}>
+          </GameBoard>
+        </section>
       </div>
     );
   }

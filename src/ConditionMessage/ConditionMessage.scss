@@ -2,9 +2,9 @@
 
 .Game {
   &.lose .ConditionMessage {
-    color: #CC0000;
+    color: $color--lose;
   }
   &.win .ConditionMessage {
-    color: #2CA58D;
+    color: $color--win;
   }
 }
