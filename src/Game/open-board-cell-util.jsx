@@ -1,6 +1,6 @@
 export default openBoardCell;
 
-function openBoardCell(cell, gameBoard){
+function openBoardCell(cell, cellRows){
   let stack = [cell],
       currentCell,
       adjacentCells;
@@ -21,7 +21,7 @@ function openBoardCell(cell, gameBoard){
   }
 
   // TODO: potentially consider an Immutable-friendly solution (building new gameboards as you go)
-  return gameBoard;
+  return cellRows;
 
   // Internal helper functions:
   function getAdjacentCells({row, column}){
@@ -39,7 +39,7 @@ function openBoardCell(cell, gameBoard){
     function getCell(row, column){
       // Javascript handles accessing Arrays out of bounds via `undefined`,
       // still, should probably just compare the bounds like an adult
-      var rowObject = gameBoard[row];
+      var rowObject = cellRows[row];
 
       return rowObject && rowObject.cells[column];
     }
