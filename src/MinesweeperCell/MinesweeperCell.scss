@@ -1,0 +1,41 @@
+@import '../colors.scss';
+
+.MinesweeperCell {
+  $size--cell: 24px;
+
+  width: $size--cell;
+  height: $size--cell;
+  line-height: $size--cell + 2px; // Visually looks nicer with the emoji
+  font-size: 16px;
+
+  vertical-align: middle;
+  text-align: center;
+
+  background: $color--component-base-grey;
+  border: 1px solid $color--border;
+
+  &.visible {
+    background-color: $color--brand-text-pair-light;
+    color: $color--brand-text-pair-dark;
+
+    &.bomb {
+      background-color: #FF8888;
+    }
+  }
+
+  &:not(.visible) {
+    cursor: pointer;
+
+    &:hover {
+      background: lighten($color--component-base-grey, 10%);
+    }
+
+    &:active {
+      background: darken($color--component-base-grey, 20%);
+    }
+
+    .CellValue {
+      display: none;
+    }
+  }
+}

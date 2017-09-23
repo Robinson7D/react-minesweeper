@@ -1,0 +1,21 @@
+@import './colors.scss';
+
+.App-header {
+  padding: 10px 20px;
+  background-color: $color--brand-text-pair-dark;
+  color: $color--brand-text-pair-light;
+
+  h2 {
+    margin: auto;
+  }
+}
+
+.App {
+   .Game {
+    margin: 20px;
+  }
+}
+
+// Import components:
+@import './Game/Game.scss';
+@import './MinesweeperCell/MinesweeperCell.scss';

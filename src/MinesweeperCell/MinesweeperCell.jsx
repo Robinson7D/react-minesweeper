@@ -5,10 +5,13 @@ export default MinesweeperCell;
 
 // Functions:
 function MinesweeperCell ({isBomb, visible, adjacentBombs, onClick}){
-  return <div className={"MinesweeperCell" + (visible ? ' visible' : '')}
-               onClick={onClick}>{
+  let className = "MinesweeperCell";
+  if(visible){ className += ' visible'; }
+  if(isBomb){ className += ' bomb'; }
+
+  return <div className={className}onClick={onClick}>{
     <div className="CellValue">
-      {isBomb ? "B" : (adjacentBombs ? adjacentBombs : '')}
+      {isBomb ? "💣" : (adjacentBombs ? adjacentBombs : '')}
     </div>
   }</div>;
 }
