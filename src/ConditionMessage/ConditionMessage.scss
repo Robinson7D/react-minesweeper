@@ -1,5 +1,9 @@
 @import '../colors.scss';
 
+.ConditionMessage {
+  height: 20px;
+}
+
 .Game {
   &.lose .ConditionMessage {
     color: $color--lose;

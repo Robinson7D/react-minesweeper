@@ -18,6 +18,8 @@ class Game extends Component {
   }
 
   onCellClick(cell){
+    // Don't allow losing on first click
+    if(this.state.gameCondition === "new") { cell.isBomb = false; }
     let cellRows = openBoardCell(cell, this.state.cellRows)
 
     this.setState({
