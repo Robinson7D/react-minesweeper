@@ -20,7 +20,10 @@ class Game extends Component {
   onCellClick(cell){
     // Don't allow losing on first click
     if(this.state.gameCondition === "new") { cell.isBomb = false; }
-    let cellRows = openBoardCell(cell, this.state.cellRows)
+    else if(this.state.gameCondition !== "active"){
+      return this.handleAfterGameClick();
+    }
+    let cellRows = openBoardCell(cell, this.state.cellRows);
 
     this.setState({
       cellRows: cellRows,
@@ -30,6 +33,12 @@ class Game extends Component {
 
   onRestartClick(options) {
     this.setState(this._getNewGameState(options));
+  }
+
+  handleAfterGameClick(){
+    if(confirm("The game is over. Would you like to start another?")){
+      this.onRestartClick(this.state.options);
+    }
   }
 
   _getNewGameState(options={}){
@@ -49,7 +58,7 @@ class Game extends Component {
       <div className={this.getGameClassName()}>
         <GameControls onRestartClick={(options)=> this.onRestartClick(options)}>
         </GameControls>
-        <section class="CurrentGame">
+        <section className="CurrentGame">
           <ConditionMessage gameCondition={this.state.gameCondition}>
           </ConditionMessage>
           <GameBoard onCellClick={(cell)=> this.onCellClick(cell)}

@@ -31,6 +31,17 @@
     }
   }
 
+  .ControlsContainer {
+    .ErrorMessage {
+      display: none;
+      margin-top: 5px;
+    }
+
+    .error + .ErrorMessage {
+      display: block;
+      color: $color--lose;
+    }
+  }
 
   .Control {
     display: flex;
@@ -47,18 +58,6 @@
 
     &:not(:first-child) {
       margin-top: 15px;
-    }
-  }
-
-  .ControlsContainer {
-    .ErrorMessage {
-      display: none;
-      margin-top: 5px;
-    }
-
-    .error + .ErrorMessage {
-      display: block;
-      color: $color--lose;
     }
   }
 }

@@ -2,8 +2,32 @@
 
 .Game {
   display: flex;
+  max-width: 100%;
+
+  padding: 20px;
+  overflow: auto;
 
   .GameControls {
-    margin-right: 60px;
+    margin-right: 40px;
+  }
+
+  &.win {
+    .ConditionMessage {
+      color: $color--win;
+    }
+    .GameBoard {
+      border-color: $color--win;
+      box-shadow: 0 0 8px lighten($color--win, 10%);
+    }
+  }
+
+  &.lose {
+    .ConditionMessage {
+      color: $color--lose;
+    }
+    .GameBoard {
+      border-color: $color--lose;
+      box-shadow: 0 0 3px $color--lose;
+    }
   }
 }

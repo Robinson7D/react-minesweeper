@@ -2,13 +2,7 @@
 
 .ConditionMessage {
   height: 20px;
-}
-
-.Game {
-  &.lose .ConditionMessage {
-    color: $color--lose;
-  }
-  &.win .ConditionMessage {
-    color: $color--win;
-  }
+  text-align: center;
+  max-width: 70vw; // Incase the grid gets huge
+  min-width: 200px;
 }

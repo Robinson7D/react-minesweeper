@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './GameControls.css';
 
 const MIN_SIZE = 5;
+const MAX_SIZE = 100;
 
 class GameControls extends Component {
   constructor(props){
@@ -24,11 +25,11 @@ class GameControls extends Component {
   }
 
   onSizeChange(event){
-    let size = event.target.value;
+    let size = +event.target.value;
 
     this.setState({
       size: size,
-      sizeError: +size < MIN_SIZE,
+      sizeError: size < MIN_SIZE || size > MAX_SIZE,
     });
   }
 
@@ -69,7 +70,7 @@ class GameControls extends Component {
                    onChange={(event)=> this.onSizeChange(event)}/>
           </label>
           <div className="ErrorMessage">
-            Size must be at least {MIN_SIZE}
+            Size must be between {MIN_SIZE} and {MAX_SIZE}
           </div>
 
           <label className={this._getDifficultyInputLabelClass()}>
