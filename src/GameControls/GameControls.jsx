@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import getDefaultControlValues from './get-default-control-values.jsx';
 import './GameControls.css';
 
 const MIN_SIZE = 5;
@@ -7,21 +8,22 @@ const MAX_SIZE = 100;
 class GameControls extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      size: 10,
+    this.state = Object.assign(getDefaultControlValues(), {
       sizeError: false,
-    };
-
-    this.onSizeChange = this.onSizeChange.bind(this);
+      difficultyError: false,
+    });
   }
 
-  onResetClick() {
-    if(!this.state.sizeError){
-      this.props.onRestartClick({
+  handleSubmit(event) {
+    event.preventDefault();
+
+    if(!(this.state.sizeError || this.state.difficultyError)){
+      this.props.onSubmit({
         size: this.state.size,
         difficulty: this.state.difficulty,
       });
     }
+    return false;
   }
 
   onSizeChange(event){
@@ -58,9 +60,15 @@ class GameControls extends Component {
     return className;
   }
 
+  _errorMessage(errorCondition, message) {
+    if(!errorCondition){ return; }
+
+    return <div className="ErrorMessage">{message}</div>
+  }
+
   render() {
     return (
-      <section className="GameControls">
+      <form className="GameControls" onSubmit={(...args)=> this.handleSubmit(...args)}>
         <h3> Controls </h3>
         <div className="ControlsContainer">
           <label className={this._getSizeInputLabelClass()}>
@@ -69,9 +77,7 @@ class GameControls extends Component {
                    value={this.state.size}
                    onChange={(event)=> this.onSizeChange(event)}/>
           </label>
-          <div className="ErrorMessage">
-            Size must be between {MIN_SIZE} and {MAX_SIZE}
-          </div>
+          {this._errorMessage(this.state.sizeError, `Size must be between ${MIN_SIZE} and ${MAX_SIZE}`)}
 
           <label className={this._getDifficultyInputLabelClass()}>
             <span> Difficulty: </span>
@@ -85,17 +91,14 @@ class GameControls extends Component {
               <option value="-1"> So Hard It's Easy </option>
             </select>
           </label>
-          <div className="ErrorMessage">
-            Invalid difficulty selection
-          </div>
+          {this._errorMessage(this.state.difficultyError, 'Invalid difficulty selection')}
         </div>
 
-        <button type="text"
-                className="RestartButton"
-                onClick={()=> this.onResetClick()}>
+        <button type="submit"
+                className="RestartButton">
           Restart
         </button>
-      </section>
+      </form>
     );
   }
 }

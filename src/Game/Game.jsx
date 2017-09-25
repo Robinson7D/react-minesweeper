@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import openBoardCell from './open-board-cell-util.jsx';
 import getGameCondition from './get-game-condition-util.jsx';
+import { buildCellRows } from './cell-rows-util.jsx';
+import getDefaultControlValues from '../GameControls/get-default-control-values.jsx';
 
 // Components:
 import GameBoard from '../GameBoard/GameBoard.jsx';
@@ -14,7 +16,7 @@ import './Game.css';
 class Game extends Component {
   constructor(props){
     super(props);
-    this.state = this._getNewGameState();
+    this.state = this._getNewGameState(getDefaultControlValues());
   }
 
   onCellClick(cell){
@@ -31,17 +33,20 @@ class Game extends Component {
     });
   }
 
-  onRestartClick(options) {
-    this.setState(this._getNewGameState(options));
+  tryRestart(options) {
+    let shouldRestart = (this.state.gameCondition === "new")
+                     || confirm("There's a game in progress - are you sure you'd like to start a new game?");
+
+    if(shouldRestart){ this.setState(this._getNewGameState(options)); }
   }
 
   handleAfterGameClick(){
     if(confirm("The game is over. Would you like to start another?")){
-      this.onRestartClick(this.state.options);
+      this.setState(this._getNewGameState(this.state.options));
     }
   }
 
-  _getNewGameState(options={}){
+  _getNewGameState(options){
     return {
       options: options,
       cellRows: buildBoardCells(options),
@@ -56,14 +61,12 @@ class Game extends Component {
   render() {
     return (
       <div className={this.getGameClassName()}>
-        <GameControls onRestartClick={(options)=> this.onRestartClick(options)}>
+        <GameControls onSubmit={(options)=> this.tryRestart(options)}>
         </GameControls>
         <section className="CurrentGame">
-          <ConditionMessage gameCondition={this.state.gameCondition}>
-          </ConditionMessage>
+          <ConditionMessage gameCondition={this.state.gameCondition} />
           <GameBoard onCellClick={(cell)=> this.onCellClick(cell)}
-                     cellRows={this.state.cellRows}>
-          </GameBoard>
+                     cellRows={this.state.cellRows}/>
         </section>
       </div>
     );
@@ -73,33 +76,8 @@ class Game extends Component {
 export default Game;
 
 function buildBoardCells({size=10, difficulty=0}){
-  let i,
-      j,
-      cells = [], // Nested array for rows, columns
-      currentRow,
-      bombRandomThreshold = (difficulty * 0.05) + 0.075;
+  let isBomb = (difficulty === -1) ? (()=> true)
+                                   : (()=> Math.random() < ((difficulty * 0.05) + 0.075));
 
-  if(difficulty === -1){ bombRandomThreshold = 1; }
-
-  for(i = 0; i < size; i++) {
-    currentRow = {
-      id: 'row_'+i,
-      cells: [],
-    };
-
-    for(j = 0; j < size; j++) {
-      currentRow.cells.push({
-        id: 'row_'+i+'_cell_'+j,
-        visible: false,
-        isBomb: Math.random() < bombRandomThreshold, // TODO: place bombs after first click
-        adjacentBombs: null, // Will calculate lazily
-        row: i,
-        column: j,
-      });
-    }
-
-    cells.push(currentRow);
-  }
-
-  return cells;
+  return buildCellRows(size, {isBomb});
 }

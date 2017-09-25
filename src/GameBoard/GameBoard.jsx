@@ -12,8 +12,7 @@ class GameBoard extends Component {
             {row.cells.map(cell =>
               <MinesweeperCell key={cell.id}
                                onClick={() => this.props.onCellClick(cell)}
-                               {...cell}>
-              </MinesweeperCell>
+                               {...cell}/>
             )}
           </div>
         )}
