@@ -2,6 +2,7 @@
   "name": "react-minesweeper",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://dylancodes.net/react-tests/minesweeper",
   "dependencies": {
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.1.1",
